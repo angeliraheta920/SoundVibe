@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoundVibe - Social Music & Voice Rooms</title>
+  <meta name="description" content="Plataforma de música social con salas de voz en vivo 3D, reproductor sincronizado de alta fidelidad, notas de audio, descubrimiento por radar y perfiles de creadores." />
+  <meta property="og:title" content="SoundVibe - Social Music & Voice Rooms" />
+  <meta property="og:description" content="Plataforma de música social con salas de voz en vivo 3D, reproductor sincronizado de alta fidelidad, notas de audio, descubrimiento por radar y perfiles de creadores." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google Fonts: Plus Jakarta Sans, JetBrains Mono y Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Hoja de estilos única del proyecto -->
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- ========================================================================
+       BARRA DE NAVEGACIÓN SUPERIOR (HEADER)
+       ======================================================================== -->
+  <header class="top-nav">
+    <!-- Logotipo móvil -->
+    <div class="brand-mobile" onclick="switchView('inicio')">
+      <div class="brand-icon">
+        <span class="material-symbols-outlined text-white text-xl">graphic_eq</span>
+      </div>
+      <span class="brand-name">Sound<span>Vibe</span></span>
+    </div>
+
+    <!-- Buscador Global -->
+    <div class="search-bar-wrap" id="globalSearchWrapper">
+      <span class="material-symbols-outlined search-icon" style="color: #ff0000;">smart_display</span>
+      <input type="text" id="globalSearchInput" placeholder="Buscar cualquier canción en YouTube Live... (Ctrl+K)" autocomplete="off" />
+      <button class="search-clear-btn" id="searchClearBtn" onclick="clearGlobalSearch()" style="display: none;" title="Limpiar">
+        <span class="material-symbols-outlined text-sm">close</span>
+      </button>
+
+      <!-- Dropdown Desplegable de Resultados de Búsqueda -->
+      <div class="search-results-dropdown" id="searchResultsDropdown"></div>
+    </div>
+
+    <!-- Acciones Derecha -->
+    <div class="header-right">
+      <button class="header-btn" title="YouTube Player (Cargar Video)" onclick="openModal('youtubeInputModal')">
+        <span class="material-symbols-outlined" style="color: #ff0000;">smart_display</span>
+      </button>
+
+      <button class="header-btn" title="Notificaciones" onclick="alert('3 notificaciones nuevas: Valentina inició una sala en directo.')">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="ping-dot"></span>
+      </button>
+
+      <button class="header-btn" title="Añadir amigos" onclick="switchView('chats')">
+        <span class="material-symbols-outlined">group_add</span>
+      </button>
+
+      <div class="user-pill" onclick="switchView('biblioteca')">
+        <img class="avatar-profile" src="https://lh3.googleusercontent.com/aida/AEtjO1ULDa1U3TnIUarMOLZmH3v8gzp7seioVAjJwa4SG0GFB7U3DZB5JMsOhh9q2Urxl_k7oOJgypos-s5Afl_1ZJfKYM4XUN6YWbFE1rA6GBY6gbnGw_hRqjhAtCWs-COiXWPgs-cuMFXwgjtFGTeJuL1JfqROGx_x7hUG-M2mWvfKXr0_jp_ck6uymYGaF0U5WdL68VE5auVgA5IVsho_yUi2zdvAOSOPOVlsopfVSB-G_Rm3IhwlbcKqvcc" alt="Kaelen Voss" />
+        <div class="user-details-text">
+          <div class="user-name-text">Kaelen Voss</div>
+          <div class="user-tag-text">PRO CREATOR</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       SIDEBAR IZQUIERDA (DESKTOP)
+       ======================================================================== -->
+  <aside class="left-sidebar">
+    <div>
+      <div class="brand-desktop" onclick="switchView('inicio')">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined text-white text-xl">graphic_eq</span>
+        </div>
+        <div class="brand-name">Sound<span>Vibe</span></div>
+      </div>
+
+      <nav class="nav-links">
+        <button class="nav-link-btn active" data-view="inicio" onclick="switchView('inicio')">
+          <div class="left-wrap">
+            <span class="material-symbols-outlined text-xl">feed</span>
+            <span>Inicio</span>
+          </div>
+        </button>
+
+        <button class="nav-link-btn" data-view="explorar" onclick="switchView('explorar')">
+          <div class="left-wrap">
+            <span class="material-symbols-outlined text-xl">explore</span>
+            <span>Explorar</span>
+          </div>
+        </button>
+
+        <button class="nav-link-btn" data-view="voicerooms" onclick="switchView('voicerooms')">
+          <div class="left-wrap">
+            <span class="material-symbols-outlined text-xl">graphic_eq</span>
+            <span>Voice Rooms</span>
+          </div>
+        </button>
+
+        <button class="nav-link-btn" data-view="biblioteca" onclick="switchView('biblioteca')">
+          <div class="left-wrap">
+            <span class="material-symbols-outlined text-xl">library_music</span>
+            <span>Biblioteca</span>
+          </div>
+        </button>
+
+        <button class="nav-link-btn" data-view="chats" onclick="switchView('chats')">
+          <div class="left-wrap">
+            <span class="material-symbols-outlined text-xl">chat</span>
+            <span>Chats</span>
+          </div>
+          <span class="nav-badge">4</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Live Session Promo -->
+    <div class="sidebar-promo-card">
+      <div class="live-label">
+        <span>Live Session</span>
+        <span class="material-symbols-outlined text-xs" style="color: var(--secondary)">sensors</span>
+      </div>
+      <p id="sidebarLiveSessionText">Club Resonance with DJ Aura streaming now</p>
+      <button class="btn-secondary" style="width: 100%; padding: 6px; font-size: 0.75rem;" onclick="joinVoiceRoom('Club Resonance con DJ Aura'); switchView('voicerooms');">
+        <span class="material-symbols-outlined text-xs" style="color: var(--primary)">podcasts</span>
+        <span>Unirse</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ========================================================================
+       SIDEBAR DERECHA: AMIGOS ESCUCHANDO (DESKTOP)
+       ======================================================================== -->
+  <aside class="right-sidebar">
+    <div class="right-sidebar-header">
+      <h3>
+        <span class="material-symbols-outlined text-lg" style="color: var(--primary)">headphones</span>
+        <span>Amigos Escuchando</span>
+      </h3>
+      <button class="header-btn" style="width: 28px; height: 28px;" title="Ajustar radar">
+        <span class="material-symbols-outlined text-sm">tune</span>
+      </button>
+    </div>
+
+    <div class="friends-stream no-scrollbar">
+      <div class="friend-row" onclick="playTrack('Overdrive (Extended Club Mix)', 'Bicep (con Nova Ray)');">
+        <div class="avatar-status-box">
+          <div class="avatar-letter-circle">NV</div>
+          <span class="live-beacon"></span>
+        </div>
+        <div class="friend-text">
+          <div class="friend-text-top">
+            <span class="friend-name">Nova Ray</span>
+            <span class="friend-badge-live">LIVE</span>
+          </div>
+          <div class="friend-track">Overdrive (Extended Club Mix)</div>
+          <div class="friend-artist">Bicep</div>
+        </div>
+      </div>
+
+      <div class="friend-row" onclick="playTrack('Subterranean Echoes', 'Tale of Us (con Luxor 9)');">
+        <div class="avatar-status-box">
+          <div class="avatar-letter-circle sec">LX</div>
+        </div>
+        <div class="friend-text">
+          <div class="friend-text-top">
+            <span class="friend-name">Luxor 9</span>
+            <span class="friend-artist font-mono" style="font-size: 0.65rem;">12m</span>
+          </div>
+          <div class="friend-track">Subterranean Echoes</div>
+          <div class="friend-artist">Tale of Us</div>
+        </div>
+      </div>
+
+      <div class="friend-row" onclick="playTrack('Afterlife Melodic Waves', 'Anyma (con Mireia S.)');">
+        <div class="avatar-status-box">
+          <div class="avatar-letter-circle">MR</div>
+        </div>
+        <div class="friend-text">
+          <div class="friend-text-top">
+            <span class="friend-name">Mireia S.</span>
+            <span class="friend-artist font-mono" style="font-size: 0.65rem;">1h</span>
+          </div>
+          <div class="friend-track">Afterlife Melodic Waves</div>
+          <div class="friend-artist">Anyma</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" style="width: 100%; margin-top: 14px; font-size: 0.8rem;" onclick="openModal('groupSessionModal')">
+      <span class="material-symbols-outlined text-sm">sensors</span>
+      <span>Iniciar Sesión Grupal</span>
+    </button>
+  </aside>
+
+  <!-- ========================================================================
+       CONTENIDO DINÁMICO (SPA)
+       ======================================================================== -->
+  <main class="content-wrapper">
+
+    <!-- ==================== VISTA 1: INICIO (CENTRALIZADO) ==================== -->
+    <section class="view-section active" id="view-inicio">
+      <div class="feed-centralized-container">
+
+        <!-- 1. Historias & Notas Musicales -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="material-symbols-outlined text-lg" style="color: var(--primary)">graphic_eq</span>
+              <span style="font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">Notas de Audio & Momentos</span>
+            </div>
+            <span style="font-size: 0.7rem; font-family: var(--font-mono); color: var(--text-dim);">Actualizado hace 2m</span>
+          </div>
+
+          <div class="stories-strip no-scrollbar">
+            <!-- Tu Nota -->
+            <div class="story-item" onclick="alert('Grabar nueva nota de audio...');">
+              <div class="story-add-button">
+                <span class="material-symbols-outlined text-2xl" style="color: var(--primary)">add</span>
+                <div class="plus-badge"><span class="material-symbols-outlined text-xs">mic</span></div>
+              </div>
+              <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Tu Nota</span>
+            </div>
+
+            <!-- Sara V -->
+            <div class="story-item" onclick="playTrack('Midnight City vibes', 'Sara V. (Nota de audio)');">
+              <div class="story-bubble-tooltip">Midnight City vibes 🎧</div>
+              <div class="story-avatar-wrap">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_DVbvL-wHOXgLZs38n_g_rYmh-VThhgEqtHVc_h98UgFDiXQFuXFTP5rvVQTTdGNdAdasEK-vGJhuK2f_jJkaOBH-mGx9zq5MidZ_N9M15-MurUNnxaqrJMH8gB06MLtsG9WlCjGy5Ljl1ynGSTHD8z9OoxC6q1aCLUYRvRxVoaPn5fq5X1jDiqK1XPSkX_dSzgn-kn-D5y90902fsLVurL5t3dxiHbv0GkOd7IaJorzu9dsd8hKR" alt="Sara V" />
+              </div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: #fff;">Sara V.</span>
+            </div>
+
+            <!-- Kiko N -->
+            <div class="story-item" onclick="playTrack('Daft Punk replay', 'Kiko N. (Nota de audio)');">
+              <div class="story-bubble-tooltip">Daft Punk replay ⚡</div>
+              <div class="story-avatar-wrap">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1Lu_z4QxqRIF8bHkjpAF8oAuUyi_uzLnDXzmRARGYjXyAH7wYye2DB08HuZtOSZCHZXZVH40SCRzE4GfQOh9WzD2pqQHvm2xz-4-FsRl8gecheTgWEZNL8iTewGP5qSFyhueZMGfGXSLUJXovL7Z7lVDtAQo7nAozlPwcMCt6LgpQu8gNpf02y1kHPrzN-ih9QC0n3uLWd1kZ99XnxXQcadAqD_VvrItvjNJy2VMHDtcLcgGMO6lh" alt="Kiko N" />
+              </div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: #fff;">Kiko N.</span>
+            </div>
+
+            <!-- Lucía M -->
+            <div class="story-item" onclick="playTrack('Buscando samples', 'Lucía M. (Nota de audio)');">
+              <div class="story-bubble-tooltip">Buscando samples 🎹</div>
+              <div class="story-avatar-wrap">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDayojfI2TB_3ztBS3VSwa5SCt7GDtU98RDWZbtcx9kQYxqWea-zHgCg0PIyJ6f1XtWNLaPqqHWVRNZFDBGrdjJ8BDzwkzo5PPLBOGUM8dlppdEHT0npLiy1xShroHQznGXsMHAvGGYXjSLrbhS0Y7_-y-kPEvJ3pjoe5DptowjW4-GE1UBegDej4siDW3wthqmRBo5ojMbPO5tpH5WwYcYMD2eB1lg9N8xj7YMg8RgqJK1sbMhY1n3" alt="Lucía M" />
+              </div>
+              <span style="font-size: 0.72rem; font-weight: 600; color: var(--text-muted);">Lucía M.</span>
+            </div>
+
+            <!-- Axel Voss -->
+            <div class="story-item" onclick="playTrack('Berlín 04:00 AM', 'Axel Voss (Nota de audio)');">
+              <div class="story-bubble-tooltip">Berlín 04:00 AM 🖤</div>
+              <div class="story-avatar-wrap">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgin4xz943p7WFXU2nsXlWxAeBKL8IxOZogzd9GIhwYoQwUeQZPuN-ylAApuPXoD-mSGzktDX7ce1VN9LLYDe-Ws8_2_64LIuQhCxG9BbD6pAZgwHyfUMdxiqHfyy9C0K6jGAkd1EihIJajoyEt7kf_obGtqdIjvN1BEe1dDEcu3AwkTjZBCenzRctD3m1Tmm1KfmEXtvLJwgkoswzQnI__5juLpc5NGWTOf6aDGt8H73SUS0-s220" alt="Axel Voss" />
+              </div>
+              <span style="font-size: 0.72rem; font-weight: 600; color: var(--text-muted);">Axel Voss</span>
+            </div>
+
+            <!-- Camila R -->
+            <div class="story-item" onclick="playTrack('Mezclando vinilos', 'Camila R. (Nota de audio)');">
+              <div class="story-bubble-tooltip">Mezclando vinilos 🔥</div>
+              <div class="story-avatar-wrap">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFmLLWSPTZ80xdqjut-g7o3BBfaMDVuiX95aC33cHWGjX7vuCYLVq3EUvVut4vK1_vUa67QUWfV0Usi_pXHNAngeTa0SZGTV33rXzYbhDozzsbGsL1-_Qg4Z9tPHyClPmRjmhDSAYj4BqFHcWq8iHiFLfWudfvWH3KE6GOmVzyphQXE9R_KGHsMpk_TFVvmwube1tLQjwcFeEeDN0sql1Z5BAihYzT6W9Yve3ikk8oVYdPAeHcDf9t" alt="Camila R" />
+              </div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: #fff;">Camila R.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Pestañas de Navegación del Feed (Centradas) -->
+        <div class="feed-tabs-row">
+          <div class="pill-tab-bar">
+            <button class="tab-pill active" onclick="document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active')); this.classList.add('active');">Para ti</button>
+            <button class="tab-pill" onclick="document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active')); this.classList.add('active');">Amigos</button>
+            <button class="tab-pill" onclick="document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active')); this.classList.add('active');">Synthwave & Electronic</button>
+            <button class="tab-pill" onclick="document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active')); this.classList.add('active');">Novedades</button>
+          </div>
+        </div>
+
+        <!-- 3. Banner Sesión en Vivo Sincronizada -->
+        <div class="live-hero-banner" id="liveHeroBanner">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <img class="banner-cover" id="liveSessionBannerCover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe-jrxSB7tfASqAcR5OG56NMWcB5HrVQKmTWtPGgAyBrCBWP8ArG_m_nW77brAn0gjKp7TcVLdQKiVWO8kAdv75AAdyDx5kbPyS-AzNsNXj7pzx45v9DWbzVNKU7JKMiQOb2eScQ12zGDnOHnz7BNOYiVMQyogccgTlZdUuz7XDUTuRUmeU3H_tEZWrrxr6fGWl9lJ1HfYoEXXxmB7X24aq06f11oSis_pHfiYXJOD4q5csFw5R2uY" alt="Live Session" />
+            <div class="banner-content">
+              <div class="banner-header-badges">
+                <span class="live-indicator-pill">● EN DIRECTO</span>
+                <span class="live-quality-pill" id="liveSessionQualityBadge">LIVE SESSION · HQ SYNC</span>
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 4px;" id="liveSessionBannerTitle">Synthwave Club Night: Midnight Overdrive</h3>
+              <p style="font-size: 0.8rem; color: var(--text-muted);" id="liveSessionBannerSubtitle">24 amigos escuchando en sincronía perfecta con audio espacial 3D.</p>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="openModal('visualizerModal');">
+            <span class="material-symbols-outlined text-sm">equalizer</span>
+            <span>Ver Live Session</span>
+          </button>
+        </div>
+
+        <!-- Tarjeta Oficial YouTube IFrame Player -->
+        <div class="yt-featured-card">
+          <div class="yt-featured-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="yt-badge-tag"><span class="material-symbols-outlined text-xs">play_arrow</span> YouTube Player API</span>
+              <span style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">Carpeta: /player/</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-secondary" style="font-size: 0.75rem; padding: 4px 12px;" onclick="toggleYouTubeDockVisibility(true);">
+                <span class="material-symbols-outlined text-xs">smart_display</span> Ver Video
+              </button>
+              <button class="btn-primary" style="font-size: 0.75rem; padding: 4px 14px; background: #ff0000;" onclick="openModal('youtubeInputModal');">
+                <span class="material-symbols-outlined text-xs">add_link</span> Cargar URL
+              </button>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: #fff;">Reproductor Integrado con YouTube IFrame API</h3>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+                Audio y video sincronizados en directo. Haz clic en cualquier pista para cargarla en el motor oficial:
+              </p>
+            </div>
+          </div>
+
+          <!-- Accesos rápidos a temas curados de YouTube -->
+          <div class="yt-quick-grid">
+            <div class="yt-quick-item" onclick="selectCuratedYouTubeTrack('t-cybernetic')">
+              <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC2drgAMhpuq2pbyTH6Pk6zv4Yjuh5pF16LSd6GtZ73xchmQENvZ9__z7xH_XKZjMSD_PWN8cA0bpBIvcAMM9AbMI0Cj171lmw0NHe-LxOmRne6ousrdmlPowidEcPjneP_9ab3-jXWIjgCMQeicg4bnkru4RJHcdl8RGjF2KgjHyF0XWn2VuAjondW3qs36hjtVRjJHrme78Sby5JlL8-RJd9rr75DixqlWwI_7v3RawfnYA6-MW5" alt="Kiasmos" />
+              <div class="yt-quick-info">
+                <div class="yt-quick-title">Kiasmos - Looped</div>
+                <div class="yt-quick-artist">Sonic Rituals</div>
+              </div>
+            </div>
+
+            <div class="yt-quick-item" onclick="selectCuratedYouTubeTrack('t-midnight')">
+              <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe-jrxSB7tfASqAcR5OG56NMWcB5HrVQKmTWtPGgAyBrCBWP8ArG_m_nW77brAn0gjKp7TcVLdQKiVWO8kAdv75AAdyDx5kbPyS-AzNsNXj7pzx45v9DWbzVNKU7JKMiQOb2eScQ12zGDnOHnz7BNOYiVMQyogccgTlZdUuz7XDUTuRUmeU3H_tEZWrrxr6fGWl9lJ1HfYoEXXxmB7X24aq06f11oSis_pHfiYXJOD4q5csFw5R2uY" alt="Kavinsky" />
+              <div class="yt-quick-info">
+                <div class="yt-quick-title">Kavinsky - Nightcall</div>
+                <div class="yt-quick-artist">VIP Mix Synthwave</div>
+              </div>
+            </div>
+
+            <div class="yt-quick-item" onclick="selectCuratedYouTubeTrack('t-sunset')">
+              <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1sEPJJ53nDUFQI3_u5M-dTxggCUlwJ0X5i6lFgFgEgphJxyl701_9kkJdTdpfgQiJoO_2JOtxrOKMsNEQKKAROl7aSPy3py7goHFVfwCqKcvMclfleTB5fsvOowAy7Y4RPpm0VikXjfP7vu7SWevLmxK4ZXcEaUATpBSaFclaWgejw6aw7FZqBG60scTet3T2Lv6HMOEsPjAWb2i5ZrQEdhC1F-LTmvSyC1-Q0uM17FBA5NvKOqIo" alt="The Midnight" />
+              <div class="yt-quick-info">
+                <div class="yt-quick-title">The Midnight - Sunset</div>
+                <div class="yt-quick-artist">Late Night Synth</div>
+              </div>
+            </div>
+
+            <div class="yt-quick-item" onclick="selectCuratedYouTubeTrack('t-synthradio')">
+              <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlsWYBB4lFL2QTiJ9mRWLb70ZXRRBsdOjLqBq0BJnmWWpqlGF_8Ao9JtzG4U34AXaekvx7NkNuFZ6p1mv8FOj6PLj7rDZwhVTP1HM_yB-89KP3WzEnl5L9hwU0sDKcVNL82ZVmzfhLBvKelS-P2mgHjbal1Fr-lWzOCgwrkE0a91ulwhDYqDbMIKLvvK9O6N3CzYaWT8eesIQVP4EFRIJePUQNaERN_TeCdwyVY-oWhc5F7jExCNUL" alt="Radio" />
+              <div class="yt-quick-info">
+                <div class="yt-quick-title">Radio Synthwave 24/7</div>
+                <div class="yt-quick-artist">Lofi Girl Live</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Publicación Social 1: Sofia Chen Playlist Share -->
+        <article class="social-post-card">
+          <div class="post-author-row">
+            <div class="author-details">
+              <img class="author-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANF-Fm7QqPXi14e9ByRtPrxjfh6kIdP79b3AK4-deGGRL-iiCFLcEK0m8Xa__PSiV0DJUsoph3aqLnrO29UtFIGeo-hv0nYF6W2hI0a7tMcSB3_nDm4ffgd2IwjRmVmD-BCJuXAHTgAtDr927srxi1b6OwRSoJ0mYAacIPwvogDNTOEszOEQeG0bT0swM5DknTovXKEK5vHLW8JmO4HQFpeSSD6HbLC_O31YPSl2Gl_ynLWwYxxl6q" alt="Sofia Chen" />
+              <div class="author-text">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <strong>Sofia Chen</strong>
+                  <span class="material-symbols-outlined text-sm" style="color: var(--primary);">verified</span>
+                  <span style="font-size: 0.8rem; color: var(--text-dim);">compartió una lista</span>
+                </div>
+                <div class="author-handle">@sofiachen · Hace 45 min</div>
+              </div>
+            </div>
+            <button class="header-btn"><span class="material-symbols-outlined">more_horiz</span></button>
+          </div>
+
+          <p class="post-body-text">
+            Armé esta selección para manejar de noche por la autopista vacía. Mucho arpegio analógico, baterías ochenteras densas y melodías nostálgicas. Suban el volumen 🌃⚡️
+          </p>
+
+          <div class="embed-playlist-box">
+            <img class="playlist-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1sEPJJ53nDUFQI3_u5M-dTxggCUlwJ0X5i6lFgFgEgphJxyl701_9kkJdTdpfgQiJoO_2JOtxrOKMsNEQKKAROl7aSPy3py7goHFVfwCqKcvMclfleTB5fsvOowAy7Y4RPpm0VikXjfP7vu7SWevLmxK4ZXcEaUATpBSaFclaWgejw6aw7FZqBG60scTet3T2Lv6HMOEsPjAWb2i5ZrQEdhC1F-LTmvSyC1-Q0uM17FBA5NvKOqIo" alt="Late Night Synthwave" onclick="playTrack('Sunset', 'The Midnight (Late Night Synthwave)');" />
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <h4 style="font-size: 1rem; font-weight: 800; color: #fff;">Late Night Synthwave Vol. 3</h4>
+                  <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--primary); font-weight: 800;">1h 42m</span>
+                </div>
+                <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Incluye Kavinsky, The Midnight, Gunship, Carpenter Brut</p>
+              </div>
+
+              <!-- Audio Waveform Scrubber -->
+              <div class="audio-waveform-player">
+                <div style="display: flex; justify-content: space-between; font-size: 0.7rem; font-family: var(--font-mono);">
+                  <span style="color: #fff;">Vista previa: The Midnight - Sunset</span>
+                  <span style="color: var(--text-dim);">01:14 / 05:26</span>
+                </div>
+                <div class="waveform-bars-flex dynamic-waveform-bars" onclick="playTrack('The Midnight - Sunset', 'Sofia Chen Curated');"></div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                <button class="btn-secondary" style="font-size: 0.75rem; padding: 6px 14px;" onclick="switchView('biblioteca');">
+                  <span class="material-symbols-outlined text-sm" style="color: var(--primary)">bookmark_add</span>
+                  <span>Añadir a mi biblioteca</span>
+                </button>
+                <button class="header-btn" style="width: 28px; height: 28px;"><span class="material-symbols-outlined text-sm">share</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-footer-actions">
+            <div class="action-cluster">
+              <button class="action-metric-btn liked" onclick="this.classList.toggle('liked');"><span class="material-symbols-outlined text-base">favorite</span> 148</button>
+              <button class="action-metric-btn"><span class="material-symbols-outlined text-base">chat_bubble</span> 32 comentarios</button>
+              <button class="action-metric-btn"><span class="material-symbols-outlined text-base">repeat</span> 19</button>
+            </div>
+            <span style="font-size: 0.72rem; color: var(--text-dim);">Escuchado por Kaelen y 12 amigos</span>
+          </div>
+        </article>
+
+        <!-- Tira Simétrica Centralizada: Tendencias en tu Red & Algoritmo AI -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+          <div style="background: rgba(26,27,32,0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-size: 0.85rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 6px;">
+                <span class="material-symbols-outlined text-base" style="color: var(--primary)">trending_up</span>
+                Tendencias en tu Red
+              </span>
+              <span style="font-size: 0.7rem; font-family: var(--font-mono); color: var(--text-dim);">24h</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; cursor: pointer;" onclick="switchView('explorar');">
+                <span><strong style="color: var(--primary); margin-right: 6px;">01</strong> #SynthwaveAutumn</span>
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">18.4k</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; cursor: pointer;" onclick="playTrack('Overdrive (Club Edit)', 'Kiasmos');">
+                <span><strong style="color: var(--secondary); margin-right: 6px;">02</strong> Overdrive (Club Edit)</span>
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--secondary);">+340</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: linear-gradient(135deg, rgba(220,38,38,0.2), rgba(26,27,32,0.9)); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--radius-xl); padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span style="font-size: 0.82rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <span class="material-symbols-outlined text-base">blur_on</span>
+                Algoritmo Social AI
+              </span>
+              <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Afinidad musical con tu círculo subió al <strong style="color: #fff;">94%</strong> gracias a Synthwave.</p>
+            </div>
+            <button class="btn-secondary" style="font-size: 0.75rem; padding: 6px; margin-top: 10px; width: 100%;" onclick="switchView('explorar');">
+              Explorar Matriz de Afinidades
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. Publicación Social 2: Mateo Rivas Audio Review -->
+        <article class="social-post-card">
+          <div class="post-author-row">
+            <div class="author-details">
+              <img class="author-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVYKE5gjkf-rxLoq_KeOm1iOfA79VLyN3ThBAiLxvWb1FS3siSx1JpcoLguqgAzX5gxwV7_oVD2jfd53Lp4vLi31qjHbZZM2g4pYNcziMOYYtqsfbvUwy68RWza8Pk4RDaWShYImCRBTVeZ9yf762pFlBjO4flfBc0OcbCRuAmGersYb0qHxiOgT9QS7a9v3mcIMzmurRkzz_0wy4G0hQZQv_3LhCJkLpXvZSfVJWL5inZyESjmuCA" alt="Mateo Rivas" />
+              <div class="author-text">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <strong>Mateo Rivas</strong>
+                  <span style="background: var(--primary-container); color: #fff; font-size: 0.65rem; padding: 2px 6px; border-radius: var(--radius-full); font-weight: 800;">DJ & CURADOR</span>
+                </div>
+                <div class="author-handle">Publicó una micro-reseña sonora · Hace 2h</div>
+              </div>
+            </div>
+            <div style="background: var(--bg-surface-bright); border: 1px solid rgba(239,68,68,0.25); padding: 4px 10px; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 4px;">
+              <span class="material-symbols-outlined text-sm" style="color: var(--primary)">star</span>
+              <span>4.9 / 5</span>
+            </div>
+          </div>
+
+          <h4 style="font-size: 1.05rem; font-weight: 800; color: #fff;">"El cambio de beat en el 0:18 es de otro nivel..."</h4>
+          <p class="post-body-text">
+            Analizando el nuevo EP de Jon Hopkins. Presten atención a cómo modula la saturación de cinta analógica justo antes de que entre el sub-bass. Les dejé el corte exacto en el reproductor aquí abajo:
+          </p>
+
+          <!-- Snippet con Marcador Drop en 0:18 -->
+          <div style="background: rgba(13,14,18,0.8); border: 1px solid rgba(239,68,68,0.25); border-radius: var(--radius-xl); padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="play-btn-circle" style="width: 38px; height: 38px;" onclick="playTrack('Ritual Sonoro (Audio Snippet)', 'Jon Hopkins • Marcador [00:18]');">
+                  <span class="material-symbols-outlined text-xl">play_arrow</span>
+                </button>
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 800; color: #fff;">Ritual Sonoro (Audio Snippet)</div>
+                  <div style="font-size: 0.72rem; color: var(--primary); font-weight: 700;">Marcador de Mateo: [00:18 Drop crucial]</div>
+                </div>
+              </div>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim);">00:30 Lossless</span>
+            </div>
+
+            <!-- Waveform SVG con Punto de Drop -->
+            <div style="width: 100%; height: 40px; display: flex; align-items: center;">
+              <svg style="width: 100%; height: 36px;" fill="none" viewBox="0 0 600 40" preserveAspectRatio="none">
+                <path d="M0,20 Q15,5 30,20 T60,20 T90,20 T120,5 T150,35 T180,20 T210,0 T240,40 T270,10 T300,30 T330,20 T360,20 T390,15 T420,25 T450,20 T480,8 T510,32 T540,20 T570,12 T600,20" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round"></path>
+                <path d="M0,20 Q15,5 30,20 T60,20 T90,20 T120,5 T150,35 T180,20 T210,0 T240,40" stroke="#ef4444" stroke-width="3" stroke-linecap="round"></path>
+                <circle cx="210" cy="0" r="5" fill="#ef4444" style="filter: drop-shadow(0 0 8px #ef4444);"></circle>
+              </svg>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.68rem; font-family: var(--font-mono); color: var(--text-dim);">
+              <span>00:18 (Drop)</span>
+              <span style="color: var(--primary); font-weight: 700;">Punto clave seleccionado por el autor</span>
+              <span>00:30</span>
+            </div>
+          </div>
+
+          <div class="post-footer-actions">
+            <div class="action-cluster">
+              <button class="action-metric-btn"><span class="material-symbols-outlined text-base">favorite</span> 89</button>
+              <button class="action-metric-btn"><span class="material-symbols-outlined text-base">chat_bubble</span> 14</button>
+            </div>
+            <button class="btn-secondary" style="font-size: 0.75rem; padding: 4px 12px;" onclick="switchView('voicerooms');">
+              <span>Ver review completa</span>
+              <span class="material-symbols-outlined text-xs">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 6. Spotlight Artista Emergente: Luna Creciente -->
+        <article class="social-post-card" style="background: linear-gradient(135deg, rgba(239,68,68,0.15), var(--bg-surface));">
+          <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+            <img style="width: 120px; height: 120px; border-radius: var(--radius-xl); object-fit: cover; box-shadow: 0 0 24px var(--primary-glow); border: 1px solid rgba(239,68,68,0.4);" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwgC-zYhNLclX0Z5uBO54A-dKXNZ6V0PnQPgLcHXF_WDT4qUTYIQEYFyv4QInRLIOAynnv75CeYnxxvgdf1A2wQq_oDhbcaWA92bjbETY-xjTqltd1RZyHj0E6Q9a3rOWvnc-dyp_4iuI0wgWD64SNhkilNpJr2d2Zkn9grIBGS7sPpV9lxWxdjsr4ghj_bb-vA2Nm7PUZhhkP1Igb31l-TFkarsBW77WBvRbVx4YV3X8QL3E5xi8y" alt="Luna Creciente" />
+            <div style="flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-size: 0.7rem; font-family: var(--font-mono); color: var(--primary); font-weight: 800; text-transform: uppercase;">Artista Emergente de la Semana</span>
+              <h3 style="font-size: 1.3rem; font-weight: 900; color: #fff;">Luna Creciente</h3>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Dream Pop · Ambient Ethereal · Santiago</span>
+              <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">Texturas de guitarra reverberadas y sintetizadores analógicos envolventes con más de 80.000 oyentes este mes.</p>
+              
+              <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px;">
+                <button class="btn-primary" style="font-size: 0.75rem; padding: 6px 16px;" onclick="playTrack('Reflejos en el Éter', 'Luna Creciente (Muestra Oficial)');">
+                  <span class="material-symbols-outlined text-sm">play_arrow</span>
+                  <span>Escuchar Muestra (0:45)</span>
+                </button>
+                <button class="btn-secondary" style="font-size: 0.75rem; padding: 6px 14px;">Seguir</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==================== VISTA 2: EXPLORAR ==================== -->
+    <section class="view-section" id="view-explorar">
+      <div class="explorar-wrapper">
+        <!-- Buscador Directo YouTube Live en Explorar -->
+        <div style="margin-bottom: 24px;">
+          <div class="search-bar-wrap" style="max-width: 100%; height: 48px; background: rgba(26, 27, 32, 0.9); border: 1px solid rgba(255, 0, 0, 0.35); padding: 0 12px 0 16px;">
+            <span class="material-symbols-outlined search-icon" style="color: #ff0000; font-size: 1.3rem;">smart_display</span>
+            <input type="text" id="explorarSearchInput" placeholder="Buscar cualquier canción, artista o video en YouTube Live..." onkeydown="if(event.key === 'Enter'){ playYouTubeSearch(this.value); this.value=''; }" />
+            <button class="btn-primary" style="padding: 7px 18px; font-size: 0.8rem; background: #ff0000; border-radius: var(--radius-full);" onclick="const inp=document.getElementById('explorarSearchInput'); if(inp && inp.value.trim()){ playYouTubeSearch(inp.value.trim()); inp.value=''; }">
+              <span class="material-symbols-outlined text-xs">play_arrow</span>
+              <span>Reproducir en Live YT</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Spotlight Crimson Echoes -->
+        <div class="hero-spotlight">
+          <div class="hero-spotlight-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAlsWYBB4lFL2QTiJ9mRWLb70ZXRRBsdOjLqBq0BJnmWWpqlGF_8Ao9JtzG4U34AXaekvx7NkNuFZ6p1mv8FOj6PLj7rDZwhVTP1HM_yB-89KP3WzEnl5L9hwU0sDKcVNL82ZVmzfhLBvKelS-P2mgHjbal1Fr-lWzOCgwrkE0a91ulwhDYqDbMIKLvvK9O6N3CzYaWT8eesIQVP4EFRIJePUQNaERN_TeCdwyVY-oWhc5F7jExCNUL');"></div>
+          <div class="hero-spotlight-text">
+            <span class="live-indicator-pill">LANZAMIENTO EXCLUSIVO · SEMANA 11</span>
+            <h1>Crimson Echoes<br/><span style="color: var(--primary);">Neon Waves LP</span></h1>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Sintetizadores analógicos saturados al rojo vivo, bajos sub-armónicos de 32Hz y atmósferas cyberpunk producidas en colaboración directa con la comunidad de Voice Rooms.</p>
+            <div style="display: flex; gap: 12px;">
+              <button class="btn-primary" onclick="playTrack('Neon Waves (Intro LP)', 'Crimson Echoes [FLAC 24-bit]');">
+                <span class="material-symbols-outlined">play_circle</span>
+                <span>Reproducir Álbum</span>
+              </button>
+              <button class="btn-secondary" onclick="switchView('biblioteca');">
+                <span class="material-symbols-outlined">bookmark_add</span>
+                <span>Guardar</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="hero-vinyl-deck">
+            <div class="vinyl-cover-box">
+              <img style="width: 100%; height: 100%; object-fit: cover;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC2drgAMhpuq2pbyTH6Pk6zv4Yjuh5pF16LSd6GtZ73xchmQENvZ9__z7xH_XKZjMSD_PWN8cA0bpBIvcAMM9AbMI0Cj171lmw0NHe-LxOmRne6ousrdmlPowidEcPjneP_9ab3-jXWIjgCMQeicg4bnkru4RJHcdl8RGjF2KgjHyF0XWn2VuAjondW3qs36hjtVRjJHrme78Sby5JlL8-RJd9rr75DixqlWwI_7v3RawfnYA6-MW5" alt="Crimson Echoes Cover" />
+            </div>
+            <div class="vinyl-disc">
+              <div class="vinyl-disc-core">
+                <div class="vinyl-center-hole"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Grid: Géneros & Vibras -->
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 16px;">Explorar Géneros & Vibras</h2>
+          <div class="bento-genres-grid">
+            <div class="bento-card" onclick="playTrack('Hardstyle Energy', 'SoundVibe Gym Flow');">
+              <div class="bento-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAUAaf0olTybKGBoPuf7L64GriGbpg0w1JLMUkEbpgnJAQxIsgc4SLfGHzirn-jS_anhvGjPMJ4lDOrhB2nMp1arB8LlbDaR0mZh0VItXjVvlQWebSn_82tJRP87cGDVVFs3J4KT-fnMqQGjeU4mtlMfZhnbyoX9ukIWR9rPqWLlZ1FYoQxtDZ6YJd82Oii_CJj3xzUf4e0aUaI_4VIht0z0f2NHaGUdQtCITgzI375zWv7U0NGRRFS');"></div>
+              <div class="bento-overlay"></div>
+              <span class="live-indicator-pill" style="width: fit-content;">140+ BPM</span>
+              <div style="position: relative; z-index: 10;">
+                <h4 style="font-size: 1rem; font-weight: 800; color: #fff;">Energía & Gym</h4>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">Hardstyle, Phonk & Trap</p>
+              </div>
+            </div>
+
+            <div class="bento-card" onclick="playTrack('Late Night Coffee', 'Lo-Fi Chill');">
+              <div class="bento-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDuv3I4cXOYI3nTK1b9_8_omILNfnD5gQi7YsQic9LAQY2gddPUbthIRtKpwfVPZrPkP8LL59jkFcd_j27JafF5rUgnIgq-F49ges04gqaCJP6xFJKhSGbh4obi9vbijo_ylVFQEhawoVL292Py7pQR7xDm3-PM8OpJvIotYUj1PkNjo15AwrKpV8CHTZmeZWzMqupPfqTmi_du4sKLynlwS-1BZEI8QIjoyAJOFzz_JkkX0qKqCdDl');"></div>
+              <div class="bento-overlay"></div>
+              <span class="live-indicator-pill" style="width: fit-content; background: var(--glowing-coral);">Deep Mood</span>
+              <div style="position: relative; z-index: 10;">
+                <h4 style="font-size: 1rem; font-weight: 800; color: #fff;">Chill & Noche</h4>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">Lo-Fi, Neo-Soul & Downtempo</p>
+              </div>
+            </div>
+
+            <div class="bento-card" onclick="playTrack('Darksynth Speedrun', 'Gaming Flow Studio');">
+              <div class="bento-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCAIgLOJ_19F22H77_lI0L7m4aglFg_R1pbWKntIcMYWmDcCf6TwNTdyTJ9yi_ea4kq9CQcGKr7_JDNIeBv_0tLbseX1bQdXk5sPWEKiMMBu0NJlMpqHqXsEOHugXLsRbJ3f74VmySV71nqriu4fvh6pm190IbJqQDVhCO2Iray4lpEVfIN2eKAbwzj2Qb5IDA52Y5tQVP1YejTr60008a0t7eFOkyvWlLwkDXtIebAAOmUWO6MylFD');"></div>
+              <div class="bento-overlay"></div>
+              <span class="live-indicator-pill" style="width: fit-content; background: #6b21a8;">Concentración</span>
+              <div style="position: relative; z-index: 10;">
+                <h4 style="font-size: 1rem; font-weight: 800; color: #fff;">Gaming Flow</h4>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">Darksynth, Drum & Bass</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VISTA 3: VOICE ROOMS ==================== -->
+    <section class="view-section" id="view-voicerooms">
+      <div class="voicerooms-wrapper">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span class="live-indicator-pill">● EN VIVO · RED SÓNICA</span>
+            <h1 style="font-size: 2.2rem; font-weight: 900; color: #fff; margin-top: 4px;">Voice Rooms</h1>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">42 Salas activas · 3.8k oyentes sintonizados</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-secondary" onclick="openModal('audioSettingsModal');"><span class="material-symbols-outlined text-sm">tune</span> Ajustes de Audio 3D</button>
+            <button class="btn-primary" onclick="openModal('createRoomModal');"><span class="material-symbols-outlined text-sm">add</span> Crear Voice Room</button>
+          </div>
+        </div>
+
+        <!-- Sala Destacada: Synthwave Night Live -->
+        <div class="featured-voice-room-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px;">
+              <span class="live-indicator-pill">SALA PRINCIPAL · BITRATE 320 KBPS / STEREO 3D</span>
+              <h2 style="font-size: 1.8rem; font-weight: 900; color: #fff; margin: 8px 0;">Synthwave Night Live & Feedback Sessions</h2>
+              <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Análisis armónico pista por pista de nuevas producciones retro-futuristas. Entra para presentar tu demo o disfrutar de la sesión en directo de sintetizadores analógicos.</p>
+
+              <div style="display: flex; gap: 12px; margin-top: 18px;">
+                <button class="btn-primary" onclick="joinVoiceRoom('Synthwave Night Live');">
+                  <span class="material-symbols-outlined">sensors</span>
+                  <span>Entrar al Stage</span>
+                </button>
+                <button class="btn-secondary" id="btnHandRaise" onclick="toggleHandRaise();">
+                  <span class="material-symbols-outlined text-sm">pan_tool</span>
+                  <span>Levantar la mano (12)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Escenario en Vivo con Oradores -->
+            <div class="stage-hosts-grid" style="flex: 1; max-width: 480px;">
+              <div class="host-stage-item">
+                <div class="host-avatar-ring speaking">
+                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkGssoy7rmBy7-kFvuiBaz8rLlBOtb_tNbuxOOJ0_3CSU-lt9JST3cEDlA-N2P-zhMDFtPYtbjati67_rlaFXkJc48RZUzb9OqoSfQiAaODXMT_fg4tjuurE41NMdAJarrUEEhVZyuSFXvzPWAUxvwGd2n1rmSjDnRtDwGvA3BbihfgFGX1WJFurj7s_ixTFBAAehBx6yPYJ2Tg-1AeRixpSilg9TXJg1E-Rc5jX-K0b8NxyATHeqg" alt="Valentina" />
+                </div>
+                <strong style="font-size: 0.8rem; color: #fff;">Valentina</strong>
+                <span style="font-size: 0.65rem; color: var(--primary); font-family: var(--font-mono); font-weight: 800;">HOST</span>
+              </div>
+
+              <div class="host-stage-item">
+                <div class="host-avatar-ring speaking">
+                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDJkklNoA4TvypfYBAboIEO06mu7E0oCa-id80uX7Xso-BEiSDHixW5BOw_an4NX5_luiAIjMzcpW9Oc3m5xk0v5zEs0liOIatdVFZBopm7K1e6ytQvktcri1U7Obcvje9PJVdAsWOUCPLnGTIYvf7UfUFGuAtUcew1KsSCNT3PvBfSbQLUk2CRruggwAZPBo-rpvknPrhEmUpIkQduORZWjNnH_GSmSv578xpcRnDsWTqu8wOwUjK" alt="DJ Aura" />
+                </div>
+                <strong style="font-size: 0.8rem; color: #fff;">DJ Aura</strong>
+                <span style="font-size: 0.65rem; color: var(--secondary); font-family: var(--font-mono); font-weight: 800;">CO-HOST</span>
+              </div>
+
+              <div class="host-stage-item">
+                <div class="host-avatar-ring">
+                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIh4jUicEcP4RvQJ_5xrK9R1FKWtm9wbSDB7H_I2Hqdw-tQRsjyd1MBD9FkB-8BgPjC6rpXv-7h8CHhRMRA3qB4_BBUEzCvyd7ar0xdwelJ3XD5hGfKHPZ2hhYTbcn2dsD71GVG94VLJJU144wv1CF84VCgDqba70Qm4ndQnotC3qBzUnHmplsQ963zQpEXFYUPMOlTXBsjAahnvEoUoR-k_egq2nv_JeoJRKO4TmakDnsAT7kJa28" alt="Marcus K." />
+                </div>
+                <strong style="font-size: 0.8rem; color: #fff;">Marcus K.</strong>
+                <span style="font-size: 0.65rem; color: var(--text-dim); font-family: var(--font-mono);">SPEAKER</span>
+              </div>
+
+              <div class="host-stage-item" style="cursor: pointer;" onclick="toggleHandRaise();">
+                <div style="width: 58px; height: 58px; border-radius: 50%; border: 2px dashed rgba(239,68,68,0.5); display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03);">
+                  <span class="material-symbols-outlined text-xl" style="color: var(--primary);">person_add</span>
+                </div>
+                <strong style="font-size: 0.8rem; color: var(--text-muted);">Subir al atril</strong>
+                <span style="font-size: 0.65rem; color: var(--text-dim);">Disponible</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VISTA 4: BIBLIOTECA & PERFIL ==================== -->
+    <section class="view-section" id="view-biblioteca">
+      <div class="biblioteca-wrapper">
+        <!-- Banner de Perfil Valentina -->
+        <div class="profile-banner-hero">
+          <div class="profile-banner-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCYaVpz2HWK5kiY1pTmoDXMhoSfPFVLwBFnzCoo4nVA_V7SxbLWqvzvP9c5hzKCHOhj3Erx93eLH1pVjcGdG1QcujHDjjql32NfEwwGMhgyittSLxSzVNPPnOQtlRfAPZXGlQ3xvcZrPmf0LoOW-ijQ8FM1YSlYKbIxWoCj4N56jmLauCFEkNRL0N24cS0OdTHHIpXhnzUE_qtXRhKqdFHd6xO42_wPyVo8yBhQGdUGtb9I77Yct4hc');"></div>
+          <div class="profile-banner-content">
+            <div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap;">
+              <img class="profile-avatar-big" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkGssoy7rmBy7-kFvuiBaz8rLlBOtb_tNbuxOOJ0_3CSU-lt9JST3cEDlA-N2P-zhMDFtPYtbjati67_rlaFXkJc48RZUzb9OqoSfQiAaODXMT_fg4tjuurE41NMdAJarrUEEhVZyuSFXvzPWAUxvwGd2n1rmSjDnRtDwGvA3BbihfgFGX1WJFurj7s_ixTFBAAehBx6yPYJ2Tg-1AeRixpSilg9TXJg1E-Rc5jX-K0b8NxyATHeqg" alt="Valentina" />
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <h1 style="font-size: 2rem; font-weight: 900; color: #fff;">Valentina</h1>
+                  <span class="material-symbols-outlined text-lg" style="color: var(--primary);">verified</span>
+                  <span class="live-indicator-pill">PRO CREATOR</span>
+                </div>
+                <div style="color: var(--secondary); font-size: 0.85rem; font-weight: 700;">@valentinamusic</div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Productora & exploradora sonora 🎧 | Creando paisajes sonoros en la noche 🌙</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-primary" onclick="openModal('createRoomModal');"><span class="material-symbols-outlined text-sm">add</span> Crear Playlist</button>
+              <button class="btn-secondary"><span class="material-symbols-outlined text-sm">edit</span> Editar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Himno Actual Resonance -->
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-2xl); padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 20px;">
+            <img style="width: 90px; height: 90px; border-radius: var(--radius-xl); object-fit: cover; box-shadow: 0 0 20px var(--primary-glow);" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuN0Vozz608OXJO3B_eLSrMdVKw4O_dmI_JrjzNtIQ9ueI3MCiUb0JnqUVAizfL8jV3i_97wIlx45K4cBDZ43XRX-JaddjFnIGRpsjp0R3HtP71Ht5JF2BiblUIKkvKw-7XiQLjE54rN38_k3M6jVfYTxrIYk757C7k5iqjTv_GZ8TsuLCaOpz-D3WSVsEgHo73Z9po8OIL9dqZm9TngGsvhlGipkDMRCaqY3ZjKn3KUBgvhp57dyv" alt="Resonance" />
+            <div>
+              <span style="font-size: 0.7rem; font-family: var(--font-mono); color: var(--primary); font-weight: 800;">HIMNO ACTUAL / EN REPETICIÓN (42x esta semana)</span>
+              <h3 style="font-size: 1.4rem; font-weight: 900; color: #fff;">Resonance <span style="font-size: 0.75rem; color: var(--secondary); font-family: var(--font-mono);">[FLAC 24-bit]</span></h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">HOME • Odyssey</p>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="playTrack('Resonance', 'HOME • Odyssey [FLAC 24-bit]');">
+            <span class="material-symbols-outlined">play_arrow</span>
+            <span>Reproducir Himno</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VISTA 5: CHATS ==================== -->
+    <section class="view-section" id="view-chats">
+      <div class="chats-wrapper">
+        <!-- Columna 1: Conversaciones -->
+        <div class="chat-column">
+          <div style="padding: 16px; border-bottom: 1px solid var(--border-glass);">
+            <h3 style="font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 8px;">Chats (12)</h3>
+            <input type="text" placeholder="Buscar conversaciones..." style="width: 100%; background: var(--bg-surface-bright); border: none; padding: 8px 12px; border-radius: var(--radius-full); font-size: 0.8rem; color: #fff; outline: none;" />
+          </div>
+          <div class="no-scrollbar" style="flex: 1; overflow-y: auto; padding: 8px;">
+            <div style="padding: 10px; border-radius: var(--radius-lg); background: var(--bg-surface-bright); cursor: pointer; margin-bottom: 6px;">
+              <strong style="color: #fff; font-size: 0.85rem; display: block;">Club Synthwave & Amigos</strong>
+              <span style="font-size: 0.75rem; color: var(--primary);">Escuchando juntos · 3 activos</span>
+            </div>
+            <div style="padding: 10px; border-radius: var(--radius-lg); cursor: pointer; color: var(--text-muted);">
+              <strong style="color: var(--text-main); font-size: 0.85rem; display: block;">Valentina @valentinamusic</strong>
+              <span style="font-size: 0.75rem;">Escucha esta maqueta de sintetizador 🎧</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna 2: Chat en Vivo con Sala de Audio -->
+        <div class="chat-column">
+          <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-glass); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 800; color: #fff;">Club Synthwave & Amigos</h3>
+              <span style="font-size: 0.72rem; color: var(--primary);">Sincronizado: Midnight Overdrive (VIP Club Mix)</span>
+            </div>
+            <button class="btn-secondary" style="font-size: 0.72rem; padding: 4px 10px;" onclick="openModal('groupSessionModal');">Invitar</button>
+          </div>
+
+          <div class="chat-messages-container no-scrollbar" id="chatMessagesStream">
+            <div class="chat-bubble them">
+              <div style="font-size: 0.72rem; color: var(--primary); font-weight: 700; margin-bottom: 2px;">Sara V. • 14:20</div>
+              <div>Chicos, miren cómo suena esta versión remasterizada con audio espacial 🔊</div>
+            </div>
+
+            <div class="chat-bubble me">
+              <div style="font-size: 0.72rem; color: #fff; font-weight: 700; margin-bottom: 2px;">Kaelen Voss (Tú) • 14:24</div>
+              <div>Uff el sub-bajo en 0:28 entra perfecto. Lo acabo de guardar en la lista del set del viernes! 🔥</div>
+            </div>
+          </div>
+
+          <form style="padding: 12px; border-top: 1px solid var(--border-glass); display: flex; gap: 8px;" onsubmit="sendChatMessage(event);">
+            <input type="text" id="chatTextInput" placeholder="Escribe un mensaje en la cabina..." style="flex: 1; background: var(--bg-surface-bright); border: none; padding: 10px 16px; border-radius: var(--radius-full); font-size: 0.85rem; color: #fff; outline: none;" />
+            <button type="submit" class="btn-primary" style="padding: 0 16px;">
+              <span class="material-symbols-outlined text-base">send</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Columna 3: Detalles de la Sala -->
+        <div class="chat-column" style="padding: 16px;">
+          <h4 style="font-size: 0.85rem; font-weight: 800; color: #fff; margin-bottom: 12px;">Música Compartida (8)</h4>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 16px;">
+            <img style="width: 100%; aspect-ratio: 1; border-radius: var(--radius-md); object-fit: cover; cursor: pointer;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8mKQbo56TJ0RQgXdq-7vcWjuSs-CytmtFiuaYvTvhOws1CNODm7WLJBkGjnw3el1xSqssyAagliofRCDJW7NSzfd-u5C1DFl8-F1dnVANdijQcGOCYtrzZrERw0Nwfyy11-nnJjSO8p0JGTstoxyM5PVZISZqv4tLwW6NQzh0jypBoSOESE7tDsFveyRg93V0kSYqHhFD0DbRmhOk0xokOx9OFEnU98j6Ojed9B_Bx7cdPJZLSgyd" alt="Track 1" onclick="playTrack('Late Night Synth', 'Playlist de cabina');" />
+            <img style="width: 100%; aspect-ratio: 1; border-radius: var(--radius-md); object-fit: cover; cursor: pointer;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2yWcnHW6PZAnMcpXYkDKPRluA4EEdE8RilVKCkBLsSV81X2sTMiTakYCOpzaXRh6zDhXPQoY-uYIKQ9gWPfvSOjsnc5sjU8WJRpPu3aNJfBTeAs4goW6-88S7hoTaWsnVErSGSabme07Ob6-kT_v3PgN1-dw0NAHpmCVFWKlfYHdCBogMp7MdkCj7aZjaKhw7UWMb_BMq0ig6ZHcJJxNWLB119ff0s_vz47RftuJgUT-M_1dMJpVO" alt="Track 2" onclick="playTrack('Overdrive Edit', 'Snippet compartido');" />
+            <img style="width: 100%; aspect-ratio: 1; border-radius: var(--radius-md); object-fit: cover; cursor: pointer;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOuJHGk2iSDN3bp8br06DX-yK1uK-kROXjqGamHUkqVuu9ksWL2lDpr7YqUjsp5245MAQ8lITualx5q7HgytHF6Ss-RJE-A1bDOqN5TAPeMuWfjZEHIJRSOhMDGYQ8KmozaLpgAHQwlaLWt5l14M_Ng4pZXETcsyjBBpLbZ4V7V6jMHi0xUvgF7Tb8Cab67szqN4JPNM1xqS7BREPLPMU9q1rQUxAKWBcAHcushF_CuwHEtbNjon-0" alt="Track 3" onclick="playTrack('Cyber Horizon', 'Álbum completo');" />
+          </div>
+
+          <h4 style="font-size: 0.85rem; font-weight: 800; color: #fff; margin-bottom: 8px;">Participantes (3)</h4>
+          <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.6;">Sara V. (Host)<br/>Kiko N. (En línea)<br/>Kaelen Voss (Tú)</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       BARRA FLOTANTE DE CONEXIÓN DE VOICE ROOM (STICKY)
+       ======================================================================== -->
+  <div class="floating-connection-dock" id="connectionDock">
+    <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+      <span class="ping-dot" style="position: static; width: 8px; height: 8px;"></span>
+      <div style="min-width: 0;">
+        <span style="font-size: 0.75rem; font-weight: 800; color: #fff; white-space: nowrap;" id="connectedRoomTitle">CONECTADO • Synthwave Night Live</span>
+        <span style="display: block; font-size: 0.65rem; color: var(--primary); font-family: var(--font-mono);">Audio Espacial 3D Activo</span>
+      </div>
+    </div>
+    <div style="display: flex; gap: 6px;">
+      <button class="btn-secondary" id="btnMicMute" style="font-size: 0.7rem; padding: 4px 10px;" onclick="toggleMicMute();">
+        <span class="material-symbols-outlined text-sm">mic_off</span>
+        <span>Silenciado</span>
+      </button>
+      <button class="btn-primary" style="font-size: 0.7rem; padding: 4px 12px; background: #dc2626;" onclick="leaveVoiceRoom();">
+        <span>Salir</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       REPRODUCTOR PERSISTENTE INFERIOR
+       ======================================================================== -->
+  <footer class="bottom-player">
+    <div class="player-left">
+      <img class="player-cover" id="currentTrackCover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC2drgAMhpuq2pbyTH6Pk6zv4Yjuh5pF16LSd6GtZ73xchmQENvZ9__z7xH_XKZjMSD_PWN8cA0bpBIvcAMM9AbMI0Cj171lmw0NHe-LxOmRne6ousrdmlPowidEcPjneP_9ab3-jXWIjgCMQeicg4bnkru4RJHcdl8RGjF2KgjHyF0XWn2VuAjondW3qs36hjtVRjJHrme78Sby5JlL8-RJd9rr75DixqlWwI_7v3RawfnYA6-MW5" alt="Cover" onclick="openModal('visualizerModal');" />
+      <div class="player-titles">
+        <div class="player-title" id="currentTrackTitle">Cybernetic Horizon</div>
+        <div class="player-artist" id="currentTrackArtist">Kiasmos • Sonic Rituals [FLAC]</div>
+      </div>
+      <button class="header-btn main-like-btn" style="color: var(--primary);" onclick="toggleLike();" title="Favorito">
+        <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">favorite</span>
+      </button>
+    </div>
+
+    <div class="player-center">
+      <div class="player-controls-row">
+        <button class="header-btn" title="Aleatorio"><span class="material-symbols-outlined text-sm">shuffle</span></button>
+        <button class="header-btn" onclick="skipTime(-15);" title="-15s"><span class="material-symbols-outlined text-lg">skip_previous</span></button>
+        <button class="play-btn-circle" onclick="togglePlay();">
+          <span class="material-symbols-outlined text-2xl main-play-icon">pause</span>
+        </button>
+        <button class="header-btn" onclick="skipTime(15);" title="+15s"><span class="material-symbols-outlined text-lg">skip_next</span></button>
+        <button class="header-btn" title="Repetir"><span class="material-symbols-outlined text-sm">repeat</span></button>
+      </div>
+
+      <!-- Visualizador Web Audio API reactivo a volumen y frecuencias en BottomPlayer -->
+      <div class="bottom-player-visualizer-container" id="bottomPlayerVisualizerWrap">
+        <canvas id="bottomPlayerVisualizerCanvas" width="460" height="20" title="Visualizador Web Audio API: Clic para alternar modo (Barras / Onda / Radial / Matriz)"></canvas>
+        <div class="bp-vis-controls">
+          <button type="button" class="bp-vis-mode-btn" onclick="cycleBottomVisualizerMode()" title="Cambiar modo de visualización">
+            <span class="material-symbols-outlined" style="font-size: 13px;" id="bpVisModeIcon">equalizer</span>
+            <span id="bpVisModeLabel">Barras EQ</span>
+          </button>
+          <span class="bp-vis-metric-pill" id="bpVisVolPill" title="Volumen RMS actual">VOL 80%</span>
+          <span class="bp-vis-metric-pill" id="bpVisBassPill" title="Frecuencias Graves (20-250Hz)">BASS 0%</span>
+        </div>
+      </div>
+
+      <div class="scrubber-bar-row">
+        <span class="time-mono text-right" id="currentTimeDisplay">02:14</span>
+        <div class="scrubber-bar" onclick="seekFromScrubber(event);">
+          <div class="scrubber-fill" id="playerScrubberFill" style="width: 39%;"></div>
+        </div>
+        <span class="time-mono" id="durationTimeDisplay">05:42</span>
+      </div>
+    </div>
+
+    <div class="player-right">
+      <button class="header-btn" onclick="toggleYouTubeDockVisibility();" title="YouTube Video Player"><span class="material-symbols-outlined" style="color: #ff0000;">smart_display</span></button>
+      <button class="header-btn" onclick="openModal('groupSessionModal');" title="Sesión Grupal"><span class="material-symbols-outlined">groups</span></button>
+      <button class="header-btn" onclick="openModal('visualizerModal');" title="Letras y Visualizador"><span class="material-symbols-outlined">queue_music</span></button>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <span class="material-symbols-outlined text-sm" id="volumeIcon" style="color: var(--text-muted)">volume_up</span>
+        <input type="range" class="volume-range-input" min="0" max="100" value="80" oninput="handleVolumeChange(event);" />
+      </div>
+      <button class="header-btn" onclick="openModal('visualizerModal');" title="Pantalla completa"><span class="material-symbols-outlined">fullscreen</span></button>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       REPRODUCTOR FLOTANTE DOCKABLE DE YOUTUBE IFRAME API
+       ======================================================================== -->
+  <div id="youtube-player-dock" class="youtube-player-dock">
+    <div class="yt-dock-header">
+      <div class="yt-dock-title">
+        <span class="yt-dock-badge">LIVE YT</span>
+        <span id="ytDockTrackName">Cybernetic Horizon (Looped)</span>
+      </div>
+      <div class="yt-dock-actions">
+        <button class="yt-dock-btn" onclick="openModal('youtubeInputModal')" title="Cargar URL / temas de YouTube">
+          <span class="material-symbols-outlined text-sm">queue_music</span>
+        </button>
+        <button class="yt-dock-btn" onclick="toggleYouTubeMiniPlayer()" title="Expandir/Minimizar">
+          <span class="material-symbols-outlined text-sm">open_in_full</span>
+        </button>
+        <button class="yt-dock-btn" onclick="toggleYouTubeDockVisibility(false)" title="Ocultar video">
+          <span class="material-symbols-outlined text-sm">close</span>
+        </button>
+      </div>
+    </div>
+    <div class="yt-dock-video-container">
+      <div id="youtube-iframe-target"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       BARRA INFERIOR MÓVIL (TABLETS & TELÉFONOS)
+       ======================================================================== -->
+  <nav class="mobile-nav-dock">
+    <button class="mob-nav-btn active" data-view="inicio" onclick="switchView('inicio');">
+      <span class="material-symbols-outlined text-xl">feed</span>
+      <span>Inicio</span>
+    </button>
+    <button class="mob-nav-btn" data-view="explorar" onclick="switchView('explorar');">
+      <span class="material-symbols-outlined text-xl">explore</span>
+      <span>Explorar</span>
+    </button>
+    <button class="mob-nav-btn" data-view="voicerooms" onclick="switchView('voicerooms');">
+      <span class="material-symbols-outlined text-xl">graphic_eq</span>
+      <span>Rooms</span>
+    </button>
+    <button class="mob-nav-btn" data-view="biblioteca" onclick="switchView('biblioteca');">
+      <span class="material-symbols-outlined text-xl">library_music</span>
+      <span>Biblioteca</span>
+    </button>
+    <button class="mob-nav-btn" data-view="chats" onclick="switchView('chats');">
+      <span class="material-symbols-outlined text-xl">chat</span>
+      <span>Chats</span>
+    </button>
+  </nav>
+
+  <!-- ========================================================================
+       MODALES GLOBALES
+       ======================================================================== -->
+
+  <!-- Modal 1: Visualizador Inmersivo en Pantalla Completa -->
+  <div class="modal-overlay" id="visualizerModal">
+    <div class="modal-box" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="live-indicator-pill">SALA INMERSIVA 3D · LOSSLESS 24-BIT</span>
+        <button class="header-btn" onclick="closeModal('visualizerModal');"><span class="material-symbols-outlined">close</span></button>
+      </div>
+
+      <div style="text-align: center; margin: 16px 0 10px;">
+        <h2 style="font-size: 1.8rem; font-weight: 900; color: #fff;" id="visualizerTrackTitle">Cybernetic Horizon</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;" id="visualizerTrackArtist">Kiasmos • Sonic Rituals</p>
+      </div>
+
+      <!-- Canvas de visualización Web Audio API en Modal -->
+      <div style="background: rgba(18,19,23,0.9); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--radius-lg); padding: 12px; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--primary); font-weight: 800; display: flex; align-items: center; gap: 4px;">
+            <span class="material-symbols-outlined text-sm">equalizer</span> FRECUENCIAS EN VIVO (WEB AUDIO API)
+          </span>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn-secondary" style="font-size: 0.68rem; padding: 2px 8px;" onclick="cycleBottomVisualizerMode()">Cambiar Modo</button>
+          </div>
+        </div>
+        <canvas id="modalVisualizerCanvas" width="760" height="70" style="width: 100%; height: 70px; display: block; border-radius: 6px;"></canvas>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; font-family: var(--font-mono); font-size: 0.7rem;">
+          <div style="background: rgba(255,255,255,0.03); padding: 4px 8px; border-radius: 4px; display: flex; justify-content: space-between;">
+            <span style="color: var(--text-muted);">BASS</span>
+            <span style="color: var(--primary); font-weight: 800;" id="modalBassMetric">0%</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 4px 8px; border-radius: 4px; display: flex; justify-content: space-between;">
+            <span style="color: var(--text-muted);">MID</span>
+            <span style="color: var(--secondary); font-weight: 800;" id="modalMidMetric">0%</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 4px 8px; border-radius: 4px; display: flex; justify-content: space-between;">
+            <span style="color: var(--text-muted);">TREBLE</span>
+            <span style="color: #fb7185; font-weight: 800;" id="modalTrebleMetric">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Letras Sincronizadas -->
+      <div style="background: rgba(13,14,18,0.8); padding: 20px; border-radius: var(--radius-xl); text-align: center;">
+        <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 8px;">Speeding through the empty midnight boulevard</p>
+        <p style="font-size: 1.2rem; font-weight: 900; color: #fff; margin-bottom: 8px;">"Neon lights are falling on the dash..."</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">And we never look behind, no looking back</p>
+      </div>
+
+      <!-- Paleta de Reacciones en Vivo -->
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button class="btn-secondary" onclick="sendVisualizerReaction('fire');">🔥 <span id="reaction-count-fire">28</span></button>
+        <button class="btn-secondary" onclick="sendVisualizerReaction('heart');">💜 <span id="reaction-count-heart">19</span></button>
+        <button class="btn-secondary" onclick="sendVisualizerReaction('bolt');">⚡ <span id="reaction-count-bolt">35</span></button>
+        <button class="btn-secondary" onclick="sendVisualizerReaction('rocket');">🚀 <span id="reaction-count-rocket">12</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Sesión Grupal -->
+  <div class="modal-overlay" id="groupSessionModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">Iniciar Sesión Grupal</h3>
+        <button class="header-btn" onclick="closeModal('groupSessionModal');"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Escucha música en sincronía perfecta con tus amigos y activa el canal de voz en segundo plano.</p>
+      <button class="btn-primary" style="width: 100%;" onclick="alert('¡Enlace de sesión copiado al portapapeles!'); closeModal('groupSessionModal');">
+        Copiar Enlace de Invitación
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal 3: Ajustes de Audio 3D -->
+  <div class="modal-overlay" id="audioSettingsModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">Ajustes de Audio 3D</h3>
+        <button class="header-btn" onclick="closeModal('audioSettingsModal');"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Audio Espacial Binaural</span>
+        <input type="checkbox" checked style="accent-color: var(--primary);" />
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Calidad Lossless 24-bit / 96kHz</span>
+        <input type="checkbox" checked style="accent-color: var(--primary);" />
+      </div>
+      <button class="btn-primary" style="width: 100%;" onclick="closeModal('audioSettingsModal');">Guardar Ajustes</button>
+    </div>
+  </div>
+
+  <!-- Modal 4: Crear Voice Room -->
+  <div class="modal-overlay" id="createRoomModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">Crear Voice Room</h3>
+        <button class="header-btn" onclick="closeModal('createRoomModal');"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <input type="text" id="newRoomTitleInput" placeholder="Nombre de la sala..." style="width: 100%; background: var(--bg-surface-bright); border: none; padding: 10px 14px; border-radius: var(--radius-lg); color: #fff;" />
+      <button class="btn-primary" style="width: 100%;" onclick="joinVoiceRoom(document.getElementById('newRoomTitleInput').value || 'Mi Sala en Directo'); closeModal('createRoomModal'); switchView('voicerooms');">
+        Lanzar Sala en Directo
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal 5: Cargar URL / Selector de YouTube -->
+  <div class="modal-overlay" id="youtubeInputModal">
+    <div class="modal-box" style="max-width: 560px;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="yt-badge-tag"><span class="material-symbols-outlined text-xs">smart_display</span> YouTube API</span>
+          <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">Reproductor YouTube</h3>
+        </div>
+        <button class="header-btn" onclick="closeModal('youtubeInputModal');"><span class="material-symbols-outlined">close</span></button>
+      </div>
+
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: -6px;">
+        Pega cualquier enlace de YouTube o selecciona una pista masterizada de nuestra biblioteca curada:
+      </p>
+
+      <!-- Formulario para URL o ID de YouTube -->
+      <form onsubmit="loadCustomYouTubeVideo(event);" style="display: flex; flex-direction: column; gap: 10px;">
+        <div class="yt-url-input-group">
+          <input type="text" id="customYoutubeUrlInput" class="yt-url-input" placeholder="https://www.youtube.com/watch?v=... o ID (11 chars)" />
+          <button type="submit" class="btn-primary" style="background: #ff0000; padding: 10px 18px;">
+            <span class="material-symbols-outlined text-sm">play_arrow</span>
+            <span>Cargar</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Pistas curadas en alta fidelidad -->
+      <div>
+        <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); margin-bottom: 8px; display: block;">
+          Pistas Recomendadas
+        </span>
+        <div class="yt-modal-curated-grid">
+          <div class="yt-modal-curated-item" onclick="selectCuratedYouTubeTrack('t-cybernetic')">
+            <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC2drgAMhpuq2pbyTH6Pk6zv4Yjuh5pF16LSd6GtZ73xchmQENvZ9__z7xH_XKZjMSD_PWN8cA0bpBIvcAMM9AbMI0Cj171lmw0NHe-LxOmRne6ousrdmlPowidEcPjneP_9ab3-jXWIjgCMQeicg4bnkru4RJHcdl8RGjF2KgjHyF0XWn2VuAjondW3qs36hjtVRjJHrme78Sby5JlL8-RJd9rr75DixqlWwI_7v3RawfnYA6-MW5" alt="Kiasmos" />
+            <div style="min-width: 0; flex: 1;">
+              <div class="yt-quick-title">Kiasmos - Looped</div>
+              <div class="yt-quick-artist">Sonic Rituals [FLAC]</div>
+            </div>
+            <span class="material-symbols-outlined text-sm" style="color: var(--primary);">play_circle</span>
+          </div>
+
+          <div class="yt-modal-curated-item" onclick="selectCuratedYouTubeTrack('t-midnight')">
+            <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe-jrxSB7tfASqAcR5OG56NMWcB5HrVQKmTWtPGgAyBrCBWP8ArG_m_nW77brAn0gjKp7TcVLdQKiVWO8kAdv75AAdyDx5kbPyS-AzNsNXj7pzx45v9DWbzVNKU7JKMiQOb2eScQ12zGDnOHnz7BNOYiVMQyogccgTlZdUuz7XDUTuRUmeU3H_tEZWrrxr6fGWl9lJ1HfYoEXXxmB7X24aq06f11oSis_pHfiYXJOD4q5csFw5R2uY" alt="Kavinsky" />
+            <div style="min-width: 0; flex: 1;">
+              <div class="yt-quick-title">Kavinsky - Nightcall</div>
+              <div class="yt-quick-artist">VIP Mix Synthwave</div>
+            </div>
+            <span class="material-symbols-outlined text-sm" style="color: var(--primary);">play_circle</span>
+          </div>
+
+          <div class="yt-modal-curated-item" onclick="selectCuratedYouTubeTrack('t-sunset')">
+            <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1sEPJJ53nDUFQI3_u5M-dTxggCUlwJ0X5i6lFgFgEgphJxyl701_9kkJdTdpfgQiJoO_2JOtxrOKMsNEQKKAROl7aSPy3py7goHFVfwCqKcvMclfleTB5fsvOowAy7Y4RPpm0VikXjfP7vu7SWevLmxK4ZXcEaUATpBSaFclaWgejw6aw7FZqBG60scTet3T2Lv6HMOEsPjAWb2i5ZrQEdhC1F-LTmvSyC1-Q0uM17FBA5NvKOqIo" alt="The Midnight" />
+            <div style="min-width: 0; flex: 1;">
+              <div class="yt-quick-title">The Midnight - Sunset</div>
+              <div class="yt-quick-artist">Late Night Synthwave</div>
+            </div>
+            <span class="material-symbols-outlined text-sm" style="color: var(--primary);">play_circle</span>
+          </div>
+
+          <div class="yt-modal-curated-item" onclick="selectCuratedYouTubeTrack('t-resonance')">
+            <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuN0Vozz608OXJO3B_eLSrMdVKw4O_dmI_JrjzNtIQ9ueI3MCiUb0JnqUVAizfL8jV3i_97wIlx45K4cBDZ43XRX-JaddjFnIGRpsjp0R3HtP71Ht5JF2BiblUIKkvKw-7XiQLjE54rN38_k3M6jVfYTxrIYk757C7k5iqjTv_GZ8TsuLCaOpz-D3WSVsEgHo73Z9po8OIL9dqZm9TngGsvhlGipkDMRCaqY3ZjKn3KUBgvhp57dyv" alt="HOME" />
+            <div style="min-width: 0; flex: 1;">
+              <div class="yt-quick-title">HOME - Resonance</div>
+              <div class="yt-quick-artist">Odyssey Mastered</div>
+            </div>
+            <span class="material-symbols-outlined text-sm" style="color: var(--primary);">play_circle</span>
+          </div>
+
+          <div class="yt-modal-curated-item" onclick="selectCuratedYouTubeTrack('t-glue')">
+            <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCauyVP2gTdwvbKk2bud93LZFDYO34aTIUNnoSy9m2UKCrlWZE8I2wqMLZ5vQUnZR0dSrWaIRYp7Gof2RizWzU73JoP19Sz0vuA_yiGcRtuFZHuUYxLBxLDokLt7GZxEveGNshmFS_jo1G_Vb66cqtoLgpQvDLctt3akitMCU0-r1YxKfxDpbjjoV2NMhrJmuQEnRSWhHpRt9mAyFVjAmeLEZJVw-HuhlXMNyCwC3C2lTTLRciSRffS" alt="Bicep" />
+            <div style="min-width: 0; flex: 1;">
+              <div class="yt-quick-title">Bicep - Glue</div>
+              <div class="yt-quick-artist">Extended Club Mix</div>
+            </div>
+            <span class="material-symbols-outlined text-sm" style="color: var(--primary);">play_circle</span>
+          </div>
+
+          <div class="yt-modal-curated-item" onclick="selectCuratedYouTubeTrack('t-synthradio')">
+            <img class="yt-quick-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlsWYBB4lFL2QTiJ9mRWLb70ZXRRBsdOjLqBq0BJnmWWpqlGF_8Ao9JtzG4U34AXaekvx7NkNuFZ6p1mv8FOj6PLj7rDZwhVTP1HM_yB-89KP3WzEnl5L9hwU0sDKcVNL82ZVmzfhLBvKelS-P2mgHjbal1Fr-lWzOCgwrkE0a91ulwhDYqDbMIKLvvK9O6N3CzYaWT8eesIQVP4EFRIJePUQNaERN_TeCdwyVY-oWhc5F7jExCNUL" alt="Synthwave Radio" />
+            <div style="min-width: 0; flex: 1;">
+              <div class="yt-quick-title">Synthwave Radio 24/7</div>
+              <div class="yt-quick-artist">Lofi Girl Live Stream</div>
+            </div>
+            <span class="material-symbols-outlined text-sm" style="color: var(--primary);">play_circle</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-glass); padding-top: 14px;">
+        <span style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">API IFrame v3 Oficial • YouTube</span>
+        <button class="btn-secondary" style="font-size: 0.75rem; padding: 6px 14px;" onclick="closeModal('youtubeInputModal');">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Archivo JavaScript Único del Proyecto -->
+<script type="module" src="/script.js"></script>
+
+</body>
+</html>

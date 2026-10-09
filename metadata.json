@@ -1,0 +1,7 @@
+{
+  "name": "SoundVibe - Social Music & Voice Rooms",
+  "description": "Plataforma de música social con salas de voz en vivo 3D, reproductor sincronizado de alta fidelidad, notas de audio, descubrimiento por radar y perfiles de creadores.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
